@@ -115,7 +115,7 @@ export function Footer() {
       rel="noopener noreferrer"
       className="font-medium text-white/80 transition hover:text-white hover:underline"
     >
-      Rebecca Technologies
+      Rebecca Technologies Pvt.Ltd
     </a>
   </p>
 </div>
