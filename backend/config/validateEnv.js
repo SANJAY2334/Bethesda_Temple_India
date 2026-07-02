@@ -5,9 +5,6 @@ export function validateEnv() {
     'CLOUDINARY_CLOUD_NAME',
     'CLOUDINARY_API_KEY',
     'CLOUDINARY_API_SECRET',
-    'RAZORPAY_KEY_ID',
-    'RAZORPAY_KEY_SECRET',
-    'RAZORPAY_WEBHOOK_SECRET',
   ]
 
   const missing = required.filter(
@@ -43,13 +40,6 @@ export function validateEnv() {
       process.env.JWT_SECRET.length < 32
     ) {
       invalid.push('JWT_SECRET')
-    }
-
-    if (
-      process.env.RAZORPAY_KEY_ID === 'dev' ||
-      process.env.RAZORPAY_KEY_SECRET === 'dev'
-    ) {
-      invalid.push('RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET')
     }
 
     if (invalid.length) {
