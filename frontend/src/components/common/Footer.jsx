@@ -102,9 +102,23 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="container-soft border-t border-white/15 py-6 text-sm text-white/60">
-        © {new Date().getFullYear()} Bethesda Temple · Built for worship, service, and care.
-      </div>
+      <div className="container-soft flex flex-col items-center justify-between gap-2 border-t border-white/15 py-6 text-center text-sm text-white/60 md:flex-row md:text-left">
+  <p>
+    © {new Date().getFullYear()} Bethesda Temple · Built for worship, service, and care.
+  </p>
+
+  <p>
+    Powered by{' '}
+    <a
+      href="https://rebeccatechnologies.com"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="font-medium text-white/80 transition hover:text-white hover:underline"
+    >
+      Rebecca Technologies
+    </a>
+  </p>
+</div>
     </footer>
   )
 }
