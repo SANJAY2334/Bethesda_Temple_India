@@ -7,9 +7,17 @@
 // AFTER: Skip to main content link.
 // AFTER: Clean animations without blur.
 // AFTER: Design token colors throughout.
+// AFTER: Mobile nav now renders group.items as an accordion for groups that have
+//   them (Ministries, Media, Get Involved) — previously only group.to rendered,
+//   so Gallery, Livestream, Youth Ministry, Volunteer, etc. were unreachable
+//   on mobile entirely.
+// AFTER: Mobile nav now closes on actual route change via useLocation(), not
+//   just on mount — the old effect had an empty dependency array and never
+//   re-ran, so it only worked because every Link also called setMobileOpen
+//   directly.
 
 import { useEffect, useRef, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronDown, Menu, X } from 'lucide-react'
 
@@ -168,9 +176,72 @@ function DesktopLink({ group }) {
   )
 }
 
+// Mobile nav item: plain link for simple groups, accordion for groups with items
+function MobileNavItem({ group, onNavigate }) {
+  const [expanded, setExpanded] = useState(false)
+
+  if (!group.items) {
+    return (
+      <li>
+        <Link
+          to={group.to}
+          onClick={onNavigate}
+          className="block rounded-xl px-4 py-3 font-semibold text-[var(--color-ink)] transition hover:bg-[var(--color-surface-warm)] focus-visible:outline-2 focus-visible:outline-[var(--color-accent)]"
+        >
+          {group.label}
+        </Link>
+      </li>
+    )
+  }
+
+  return (
+    <li>
+      <button
+        type="button"
+        onClick={() => setExpanded((v) => !v)}
+        aria-expanded={expanded}
+        aria-controls={`mobile-submenu-${group.label}`}
+        className="flex w-full items-center justify-between rounded-xl px-4 py-3 text-left font-semibold text-[var(--color-ink)] transition hover:bg-[var(--color-surface-warm)] focus-visible:outline-2 focus-visible:outline-[var(--color-accent)]"
+      >
+        {group.label}
+        <ChevronDown
+          size={16}
+          aria-hidden="true"
+          className={`transition-transform ${expanded ? 'rotate-180' : ''}`}
+        />
+      </button>
+      <AnimatePresence initial={false}>
+        {expanded && (
+          <motion.ul
+            id={`mobile-submenu-${group.label}`}
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.15 }}
+            className="overflow-hidden pl-4"
+          >
+            {group.items.map(([label, to]) => (
+              <li key={label}>
+                <Link
+                  to={to}
+                  onClick={onNavigate}
+                  className="block rounded-xl px-4 py-2.5 text-sm font-medium text-[var(--color-ink-muted)] transition hover:bg-[var(--color-surface-warm)] hover:text-[var(--color-ink)] focus-visible:outline-2 focus-visible:outline-[var(--color-accent)]"
+                >
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+    </li>
+  )
+}
+
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const location = useLocation()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16)
@@ -179,10 +250,10 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Close mobile nav on route change
+  // Close mobile nav on route change (pathname or hash)
   useEffect(() => {
     setMobileOpen(false)
-  }, [])
+  }, [location.pathname, location.hash])
 
   return (
     <>
@@ -245,15 +316,11 @@ export function Navbar() {
               <nav aria-label="Mobile navigation">
                 <ul className="grid gap-1">
                   {groups.map((group) => (
-                    <li key={group.label}>
-                      <Link
-                        to={group.to}
-                        onClick={() => setMobileOpen(false)}
-                        className="block rounded-xl px-4 py-3 font-semibold text-[var(--color-ink)] transition hover:bg-[var(--color-surface-warm)] focus-visible:outline-2 focus-visible:outline-[var(--color-accent)]"
-                      >
-                        {group.label}
-                      </Link>
-                    </li>
+                    <MobileNavItem
+                      key={group.label}
+                      group={group}
+                      onNavigate={() => setMobileOpen(false)}
+                    />
                   ))}
                   <li>
                     <Link
