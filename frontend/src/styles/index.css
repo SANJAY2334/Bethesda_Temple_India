@@ -148,6 +148,18 @@ button {
   transform: none;
 }
 
+/* CTA button — real CSS class instead of an arbitrary-value utility
+   (text-[var(--color-ink)]), so the color can't be silently dropped
+   by Tailwind's production content scan. Used on the dark CTA banner's
+   white pill button. */
+.btn-cta {
+  color: var(--color-ink);
+}
+
+.btn-cta:hover {
+  color: var(--color-accent);
+}
+
 .btn-outline {
   display: inline-flex;
   align-items: center;
