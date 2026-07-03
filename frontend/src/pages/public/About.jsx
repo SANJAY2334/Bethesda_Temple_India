@@ -5,6 +5,8 @@
 // AFTER: Values in a clean list with checkmark icons — clear, readable, accessible.
 // AFTER: All design token colors.
 // AFTER: RevealPage replaces manual scope/useReveal pattern.
+// AFTER: Added "About the Pastor" section — portrait + bio + credential stats,
+//   placed right after the hero so visitors meet the pastor before the beliefs list.
 
 import { Check } from 'lucide-react'
 import { SectionHero } from '@/components/ui/SectionHero'
@@ -42,6 +44,22 @@ const values = [
   'Safe and joyful ministry for families',
 ]
 
+const pastorBio = [
+  `Prophet Dr. Praveen Paul is an Arch Bishop, devoted servant of God, visionary leader, and passionate preacher of the Gospel who has dedicated nearly 28 years to ministry through Bethesda Temple. His journey with Christ began at the remarkable age of 13, when he accepted Jesus Christ as his Lord and Savior. Since then, his life has been marked by unwavering faith, wholehearted obedience, and a deep commitment to advancing the Kingdom of God.`,
+  `He began his ministry in Ghataprabha, where the foundation of the work was laid through prayer, discipleship, and the preaching of God's Word. As the ministry grew under God's guidance, Bethesda Temple was established in Belagavi, becoming a place where countless lives have experienced salvation, healing, restoration, and spiritual transformation through the power of Jesus Christ.`,
+  `Prophet Praveen holds a Master's degree in Theology and has been honored with 6 Ph.D. awards from international institutions in recognition of his contribution to Christian ministry and theological leadership. He has faithfully proclaimed the Gospel across 13 nations, carrying the message of hope, faith, and salvation to people from diverse cultures and backgrounds.`,
+  `Gifted with the ability to communicate across cultures, he is fluent in 9 languages, enabling him to minister effectively to a wide range of communities. His teaching is firmly grounded in the Holy Scriptures, and his ministry is characterized by prayer, humility, compassion, and a strong dependence on the leading of the Holy Spirit.`,
+  `Throughout his years of ministry, Prophet Praveen has remained deeply rooted in Christ, equipping believers, raising disciples, strengthening churches, and encouraging people to experience a personal relationship with Jesus. His vision continues to inspire individuals and families to walk in God's purpose, live according to His Word, and become faithful ambassadors of Christ.`,
+  `His life stands as a testimony of God's grace, faithfulness, and transforming power, impacting generations through the uncompromising proclamation of the Gospel.`,
+]
+
+const pastorStats = [
+  { value: '28+', label: 'Years in ministry' },
+  { value: '13', label: 'Nations reached' },
+  { value: '9', label: 'Languages spoken' },
+  { value: '6', label: 'Ph.D. honors' },
+]
+
 export default function About() {
   return (
     <PageTransition>
@@ -57,6 +75,55 @@ export default function About() {
           copy="Our story is simple: receive the grace of Jesus, become a community of worship, and serve the city with quiet faithfulness."
           image={images.interior}
         />
+
+        {/* About the Pastor */}
+        <section className="container-soft py-16" aria-labelledby="pastor-heading">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,340px)_1fr] lg:items-start">
+            <div className="reveal lg:sticky lg:top-24">
+              <div className="overflow-hidden rounded-2xl shadow-xl">
+                <img
+                  src={images.pastor}
+                  alt="Prophet Dr. Praveen Paul"
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <dl className="mt-6 grid grid-cols-2 gap-4">
+                {pastorStats.map(({ value, label }) => (
+                  <div key={label} className="card p-4 text-center">
+                    <dt className="sr-only">{label}</dt>
+                    <dd className="font-display text-2xl font-semibold text-[var(--color-accent)]">
+                      {value}
+                    </dd>
+                    <dd className="mt-1 text-xs leading-tight text-[var(--color-ink-muted)]">
+                      {label}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+
+            <div className="reveal">
+              <p className="text-sm font-semibold uppercase tracking-widest text-[var(--color-accent)]">
+                Our shepherd
+              </p>
+              <h2
+                id="pastor-heading"
+                className="font-display mt-2 text-4xl font-semibold text-[var(--color-ink)]"
+              >
+                Prophet Dr. Praveen Paul
+              </h2>
+              <p className="mt-1 text-lg font-medium text-[var(--color-ink-muted)]">
+                Arch Bishop &amp; Senior Pastor, Bethesda Temple
+              </p>
+              <div className="mt-6 space-y-5 text-lg leading-8 text-[var(--color-ink-muted)]">
+                {pastorBio.map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Beliefs section */}
         <section className="container-soft py-16" aria-labelledby="beliefs-heading">
