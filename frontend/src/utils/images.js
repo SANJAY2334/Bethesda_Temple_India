@@ -11,5 +11,5 @@ export const images = {
     'https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=1600&q=80',
   choir:
     'https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=1600&q=80',
-  pastor: '/images/pastor.jpg',
+  pastor: '/pastor.jpg',
 }
