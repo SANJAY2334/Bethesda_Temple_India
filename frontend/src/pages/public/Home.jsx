@@ -10,6 +10,10 @@
 // AFTER: Prayer Request CTA and Donation CTA both on homepage.
 // AFTER: All sections properly labelled with headings.
 // AFTER: Fully responsive at 320px → 1920px.
+// AFTER: Fixed invalid `text-blue`/`text-blue/80` classes (not real Tailwind colors,
+//   silently dropped) -> text-blue-600/80 hover:text-blue-600 in ServiceTimesSection.
+// AFTER: SEO description corrected from "Chennai" to "Belagavi, Karnataka" to match
+//   the actual church address on the Contact page.
 
 import { Link } from 'react-router-dom'
 import {
@@ -67,7 +71,7 @@ function ServiceTimesSection() {
           </div>
           <Link
             to="/contact"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-blue/80 hover:text-blue"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600/80 hover:text-blue-600"
           >
             Plan your visit <ArrowRight size={15} aria-hidden="true" />
           </Link>
@@ -359,7 +363,7 @@ export default function Home() {
       <SEO
         title="Home"
         path="/"
-        description="Bethesda Temple — a welcoming, Christ-centered community in Chennai. Sunday services at 9:30 AM and 11:30 AM."
+        description="Bethesda Temple — a welcoming, Christ-centered community in Belagavi, Karnataka. Sunday worship at 11:00 AM."
       />
       <RevealPage>
         <Hero />
