@@ -5,6 +5,9 @@
 // AFTER: responsive padding and layout maintained.
 // AFTER: button no longer stretches full-width on mobile (justify-self-start).
 // AFTER: added focus-visible ring for keyboard accessibility.
+// AFTER: button text set to explicit text-blue-700 — previous text-[var(--color-ink)]
+//   was silently failing (var undefined in scope), text inherited white from the
+//   parent's text-white, making the button appear blank on a white background.
 
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
@@ -35,7 +38,7 @@ export function CTA({
           </div>
           <Link
             to={to}
-            className="inline-flex min-h-[48px] w-fit items-center justify-center gap-3 justify-self-start rounded-full bg-white px-7 py-3 font-semibold text-[var(--color-ink)] transition hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-ink)]"
+            className="inline-flex min-h-[48px] w-fit items-center justify-center gap-3 justify-self-start rounded-full bg-white px-7 py-3 font-semibold text-blue-700 transition hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-ink)]"
           >
             {action}
             <ArrowRight size={18} aria-hidden="true" />
